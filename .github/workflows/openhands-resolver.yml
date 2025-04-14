@@ -88,11 +88,10 @@ jobs:
       #   uses: actions/setup-python@v5
       #   with:
       #     python-version: "3.12"
-      - name: Manually install Python 3.12-dev
-        run: |
-          sudo apt-get update -y && sudo apt-get install -y python3.12-dev python3.12-venv python3.12-distutils
-          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1
-          python --version
+      - name: Install Python 3.12-dev via pyenv
+        uses: gabrielfalcao/pyenv-action@v18
+        with:
+          python-version: 3.12-dev
 
       - name: Get latest versions and create requirements.txt
         run: |
