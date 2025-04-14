@@ -247,6 +247,11 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_API_VERSION: ${{ inputs.LLM_API_VERSION }}
+          LLM_NUM_RETRIES: 6
+          LLM_RETRY_MIN_WAIT: 5
+          LLM_RETRY_MAX_WAIT: 90
+          LLM_RETRY_MULTIPLIER: 2
+          LOG_ALL_EVENTS: true
           PYTHONPATH: ""
         run: |
           cd /tmp && python -m openhands.resolver.resolve_issue \
@@ -284,6 +289,11 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_API_VERSION: ${{ inputs.LLM_API_VERSION }}
+          LLM_NUM_RETRIES: 6
+          LLM_RETRY_MIN_WAIT: 5
+          LLM_RETRY_MAX_WAIT: 90
+          LLM_RETRY_MULTIPLIER: 2
+          LOG_ALL_EVENTS: true
           PYTHONPATH: ""
         run: |
           if [ "${{ steps.check_result.outputs.RESOLUTION_SUCCESS }}" == "true" ]; then
