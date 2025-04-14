@@ -93,6 +93,11 @@ jobs:
         with:
           python-version: "3.12.9"
 
+      - name: Install g++ with C++11+ support
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ build-essential
+
       - name: Get latest versions and create requirements.txt
         run: |
           python -m pip index versions openhands-ai > openhands_versions.txt
