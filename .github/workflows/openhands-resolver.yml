@@ -85,18 +85,18 @@ jobs:
       )
     runs-on: "${{ inputs.runner || 'ubuntu-latest' }}"
     steps:
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y curl git python3-pip g++ build-essential
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12.9"
-
-      - name: Install g++ with C++11+ support
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y g++ build-essential
+          python-version: "3.12"
 
       - name: Get latest versions and create requirements.txt
         run: |
@@ -203,7 +203,7 @@ jobs:
               issue_number: ${{ env.ISSUE_NUMBER }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `[OpenHands](https://github.com/All-Hands-AI/OpenHands) started fixing the ${issueType}! You can monitor the progress [here](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`
+              body: `[FokusOpenHands](https://github.com/FokusInternal/OpenHands) começou a resolver o ${issueType}! Você pode monitorar o progresso [aqui](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`
             });
 
       - name: Install OpenHands
@@ -346,7 +346,7 @@ jobs:
                 issue_number: issueNumber,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `The workflow to fix this issue encountered an error. Openhands failed to create any code changes.`
+                body: `O workflow para resolver essa issue encountrou um erro. FokusOpenhands falhou em criar qualquer alteração de código.`
               });
               process.env.AGENT_RESPONDED = 'true';
             }
@@ -407,7 +407,7 @@ jobs:
                 issue_number: issueNumber,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `A potential fix has been generated and a draft PR #${prNumber} has been created. Please review the changes.`
+                body: `Um fix em potential foi gerado e um PR [draft] #${prNumber} foi juntamente criado. Por favor, revise as mudanças.`
               });
               process.env.AGENT_RESPONDED = 'true';
             } else if (!success && branchName) {
@@ -441,5 +441,5 @@ jobs:
               issue_number: issueNumber,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `The workflow to fix this issue encountered an error. Please check the [workflow logs](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for more information.`
+              body: `O workflow para resolver a issue encontrou um erro. Por favor check os [logs](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) para mais informações.`
             });
