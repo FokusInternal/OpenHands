@@ -79,17 +79,18 @@ jobs:
         (github.event.review.author_association == 'OWNER' || github.event.review.author_association == 'COLLABORATOR' || github.event.review.author_association == 'MEMBER')
         )
       )
+
     runs-on: fokus-garc-linode-set
     container:
       image: ubuntu:22.04
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Install dependencies
         run: |
           apt-get update
           apt-get install -y curl git python3-pip g++ build-essential
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -138,22 +139,22 @@ jobs:
           required_vars=("LLM_API_KEY")
           for var in "${required_vars[@]}"; do
             if [ -z "${!var}" ]; then
-              echo "Error: Required environment variable $var is not set."
+              echo "Error: Variável de ambiente requerida $var não foi configurada."
               exit 1
             fi
           done
 
           # Check optional variables and warn about fallbacks
           if [ -z "$LLM_BASE_URL" ]; then
-            echo "Warning: LLM_BASE_URL is not set, will use default API endpoint"
+            echo "Warning: LLM_BASE_URL não foi configurada, utilizando API endpoint padrão"
           fi
 
           if [ -z "$PAT_TOKEN" ]; then
-            echo "Warning: PAT_TOKEN is not set, falling back to GITHUB_TOKEN"
+            echo "Warning: PAT_TOKEN não foi configurada, utilizando o GITHUB_TOKEN"
           fi
 
           if [ -z "$PAT_USERNAME" ]; then
-            echo "Warning: PAT_USERNAME is not set, will use openhands-agent"
+            echo "Warning: PAT_USERNAME não configurada, utilizando o openhands-agent"
           fi
 
       - name: Set environment variables
